@@ -1,4 +1,6 @@
-import Button from "@/components/Button";
+"use client";
+import { signIn } from "next-auth/react";
+import SignInButton from "@/components/SignInButton";
 
 export default function Landing() {
   return (
@@ -11,7 +13,7 @@ export default function Landing() {
           Know where your money is going by keeping track of your personal
           finance.
         </p>
-        <Button text="Sign Up" otherStyles="px-10" onClick={() => {}} />
+        <SignInButton />
       </div>
     </main>
   );
