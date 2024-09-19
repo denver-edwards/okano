@@ -7,7 +7,7 @@ export default function Home() {
   //get currency+ budgetamount + schedule from db
   const { data: session } = useSession();
 
-  console.log(session);
+  // console.log(session);
   return (
     <div className="">
       {!session && <Landing />}
