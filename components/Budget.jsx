@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 export default function Budget() {
   const [currency, setCurrency] = useState("");
   const [budgetSchedule, setBudgetSchedule] = useState("");
-  const [budgetAmount, setBudgetAmount] = useState("");
+  const [budgetAmount, setBudgetAmount] = useState();
   // get local currency or ask? to change
 
   const listOfCurrencies = ["$", "€", "¥", "£", "₹", "₽"];
@@ -50,34 +50,55 @@ export default function Budget() {
     );
   };
 
-  const ConfirmSettings = () => {
-    return <></>;
-  };
-
   const AskBudgetAmount = () => {
     return (
       <>
         <p className="">What's your budget?</p>
-        <Button text={`${currency}100`} otherStyles="" />
-        <Button text={`${currency}200`} otherStyles="" />
+        <Button
+          text={`${currency}100`}
+          otherStyles=""
+          onClick={() => setBudgetAmount(100)}
+        />
+        <Button
+          text={`${currency}200`}
+          otherStyles=""
+          onClick={() => setBudgetAmount(200)}
+        />
         <div className="inline bg-white text-black px-4 py-2.5 rounded-xl">
           <span>{currency}</span>
           <input
             className="outline-none border-b-2 border-black w-[45px]"
             type="number"
+            on
           />
         </div>
       </>
     );
   };
 
-  // <AskBudgetAmount />
-
+  const ConfirmSettings = () => {
+    return (
+      <>
+        <p>Is this correct?</p>
+        <p>
+          I want to budget {currency}
+          <span className="text-green-400 hover:text-green-700 cursor-pointer underline">
+            {budgetAmount}
+          </span>{" "}
+          <span className="text-green-400 hover:text-green-700 cursor-pointer underline">
+            {budgetSchedule}
+          </span>
+          .
+        </p>
+      </>
+    );
+  };
   return (
     <div className="">
       {!currency && <AskCurrency />}
       {currency && !budgetSchedule && <AskBudgetSchedule />}
       {currency && budgetSchedule && !budgetAmount && <AskBudgetAmount />}
+      {currency && budgetSchedule && budgetAmount && <ConfirmSettings />}
     </div>
   );
 }
