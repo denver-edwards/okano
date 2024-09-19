@@ -5,14 +5,15 @@ import { useSession } from "next-auth/react";
 
 export default function Home() {
   //get currency+ budgetamount + schedule from db
-  const currency = "";
-
   const { data: session } = useSession();
 
+  console.log(session);
   return (
     <div className="">
       {!session && <Landing />}
-      {session && !currency && <Budget />}
+      {session && !session.user.currency && (
+        <Budget email={session.user.email} />
+      )}
     </div>
   );
 }

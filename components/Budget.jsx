@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "@/components/Button";
 
-export default function Budget() {
+export default function Budget({ email }) {
   const [currency, setCurrency] = useState("");
   const [budgetSchedule, setBudgetSchedule] = useState("");
   const [budgetAmount, setBudgetAmount] = useState();
@@ -12,7 +12,7 @@ export default function Budget() {
 
   const AskCurrency = () => {
     return (
-      <>
+      <div className="">
         <p className="">What's your preferred currency?</p>
         <div className="w-1/6 grid grid-flow-col grid-rows-2">
           {listOfCurrencies.map((symbol, index) => {
@@ -31,7 +31,7 @@ export default function Budget() {
             );
           })}
         </div>
-      </>
+      </div>
     );
   };
 
@@ -90,11 +90,31 @@ export default function Budget() {
           </span>
           .
         </p>
+        <Button text="Start Budgeting" onClick={() => saveBudgetInfo()} />
       </>
     );
   };
+
+  async function saveBudgetInfo() {
+    // console.log(email);
+    try {
+      await fetch("/api/post-budget-info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          currency,
+          budgetSchedule,
+          budgetAmount,
+        }),
+      });
+    } catch (error) {}
+  }
+
   return (
-    <div className="">
+    <div className="text-center">
       {!currency && <AskCurrency />}
       {currency && !budgetSchedule && <AskBudgetSchedule />}
       {currency && budgetSchedule && !budgetAmount && <AskBudgetAmount />}
